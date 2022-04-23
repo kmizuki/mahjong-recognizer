@@ -1,0 +1,5 @@
+mss
+opencv-python
+matplotlib
+tk
+flake8

@@ -1,11 +1,13 @@
 import mss
 import mss.tools
-import tkinter
-import time
+import tkinter as tk
 import cv2
-import math
-import numpy as np
-from matplotlib import pyplot as plt
+
+
+# 画面作成
+root = tk.Tk()
+root.geometry('300x200')
+root.title('mahjong-recognizer')
 
 
 def screenshot(monitor_number=0, output='input/sct.png'):
@@ -13,6 +15,7 @@ def screenshot(monitor_number=0, output='input/sct.png'):
         output = sct.shot(mon=monitor_number, output=output)
 
     return output
+
 
 def detection():
     # 全画面スクショ
@@ -33,24 +36,21 @@ def detection():
     # 四角形の輪郭を出力
     for i in range(len(contours)):
         x, y, w, h = cv2.boundingRect(contours[i])
-        cv2.rectangle(im, (x, y), (x + w, y + h), (0, 255, 0),2,cv2.LINE_AA)
+        cv2.rectangle(im, (x, y), (x + w, y + h), (0, 255, 0), 2, cv2.LINE_AA)
 
     cv2.imwrite('output/rect.png', im)
+
 
 def end():
     root.destroy()
 
-def main():
-    # 画面作成
-    root = tkinter.Tk()
-    root.geometry('300x200')
-    root.title('mahjong-recognizer')
 
+def main():
     # ボタン作成
-    button = tk.Button(text='クリア', font=("Meiryo", "12", "normal"), command = detection)
-    button.place(x=100, y =250, width=100, height=50 )
-    button = tk.Button(text='終了', font=("Meiryo", "12", "normal"), command = end)
-    button.place(x=100, y =370, width=100, height=50 )
+    button = tk.Button(text='検出', font=("Meiryo", "12", "normal"), command=detection)
+    button.place(x=50, y=75, width=100, height=50)
+    button = tk.Button(text='終了', font=("Meiryo", "12", "normal"), command=end)
+    button.place(x=150, y=75, width=100, height=50)
     root.mainloop()
 
 
